@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-
 class CalculatorController extends GetxController {
   RxString expression = ''.obs;
   RxString result = ''.obs;
@@ -9,7 +8,7 @@ class CalculatorController extends GetxController {
   void numClick(String text) {
     if (_isValidInput(text)) {
       expression.value += text;
-      evaluate(); 
+      evaluate(); // Automatically evaluate after adding new text
     }
   }
 
@@ -32,16 +31,15 @@ class CalculatorController extends GetxController {
 
   void erase() {
     if (expression.isNotEmpty) {
-      expression.value =
-          expression.value.substring(0, expression.value.length - 1);
+      expression.value = expression.value.substring(0, expression.value.length - 1);
     }
+    evaluate(); // Re-evaluate after erasing
   }
 
   String formatResult(double result) {
     String formatted = result.toString();
     RegExp regExp = RegExp(r'(\d)(?=(\d{3})+(?!\d))');
-    formatted =
-        formatted.replaceAllMapped(regExp, (Match match) => "${match[1]},");
+    formatted = formatted.replaceAllMapped(regExp, (Match match) => "${match[1]},");
     if (result % 1 == 0) {
       return formatted.split('.')[0];
     }
@@ -49,7 +47,17 @@ class CalculatorController extends GetxController {
   }
 
   void evaluate() {
-    if (expression.isEmpty) return;
+    if (expression.isEmpty) {
+      result.value = '';
+      return; // Prevent evaluating an empty expression
+    }
+
+    // Prevent evaluation if the last character is an operator
+    String lastChar = expression.value[expression.value.length - 1];
+    if (isOperator(lastChar)) {
+      result.value = '';
+      return; // Don't evaluate incomplete expressions
+    }
 
     try {
       Parser p = Parser();
