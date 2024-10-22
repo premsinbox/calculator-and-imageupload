@@ -53,24 +53,33 @@ class CalculatorModel extends ChangeNotifier {
     return formatted;
   }
 
-  void evaluate() {
-    if (_expression.isEmpty) {
-      _result = '';
-      notifyListeners();
-      return; // Prevent evaluating an empty expression
-    }
-
-    try {
-      Parser p = Parser();
-      Expression exp = p.parse(
-          _expression.replaceAll('\u00D7', '*').replaceAll('\u00F7', '/'));
-      ContextModel cm = ContextModel();
-      double evalResult = exp.evaluate(EvaluationType.REAL, cm);
-      _result = formatResult(evalResult);
-    } catch (e) {
-      _result = 'Error';
-    }
-
-    notifyListeners(); // Notify listeners after evaluation
+void evaluate() {
+  if (_expression.isEmpty) {
+    _result = '';
+    notifyListeners();
+    return; // Prevent evaluating an empty expression
   }
+
+  // Prevent evaluating if the last character is an operator
+  String lastChar = _expression[_expression.length - 1];
+  if (isOperator(lastChar)) {
+    _result = '';
+    notifyListeners();
+    return; // Don't evaluate incomplete expressions
+  }
+
+  try {
+    Parser p = Parser();
+    Expression exp = p.parse(
+        _expression.replaceAll('\u00D7', '*').replaceAll('\u00F7', '/'));
+    ContextModel cm = ContextModel();
+    double evalResult = exp.evaluate(EvaluationType.REAL, cm);
+    _result = formatResult(evalResult);
+  } catch (e) {
+    _result = 'Error';
+  }
+
+  notifyListeners(); // Notify listeners after evaluation
+}
+
 }
