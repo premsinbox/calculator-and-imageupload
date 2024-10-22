@@ -41,7 +41,7 @@ class CalcApp extends StatelessWidget {
                       borderRadius: BorderRadius.circular(32),
                     ),
                     margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
                     child: Consumer<CalculatorModel>(
                       builder: (context, calculator, child) {
                         return SingleChildScrollView(
@@ -56,7 +56,7 @@ class CalcApp extends StatelessWidget {
                                   calculator.result,
                                   style: GoogleFonts.rubik(
                                     textStyle: const TextStyle(
-                                      fontSize: 40,
+                                      fontSize: 35,
                                       color: blackColor,
                                     ),
                                   ),
@@ -67,7 +67,7 @@ class CalcApp extends StatelessWidget {
                                 calculator.expression,
                                 style: GoogleFonts.rubik(
                                   textStyle: const TextStyle(
-                                    fontSize: 30,
+                                    fontSize: 28,
                                     fontWeight: FontWeight.w300,
                                     color: Color.fromARGB(255, 103, 103, 103),
                                   ),
