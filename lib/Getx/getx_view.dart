@@ -44,7 +44,7 @@ class GetxCalcApp extends StatelessWidget {
                       borderRadius: BorderRadius.circular(32),
                     ),
                     margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
                     child: Obx(() {
                       return SingleChildScrollView(
                         child: Column(
@@ -58,7 +58,7 @@ class GetxCalcApp extends StatelessWidget {
                                 controller.result.value,
                                 style: GoogleFonts.rubik(
                                   textStyle: const TextStyle(
-                                    fontSize: 40,
+                                    fontSize: 35,
                                     color: blackColor,
                                   ),
                                 ),
@@ -69,7 +69,7 @@ class GetxCalcApp extends StatelessWidget {
                               controller.expression.value,
                               style: GoogleFonts.rubik(
                                 textStyle: const TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 28,
                                   fontWeight: FontWeight.w300,
                                   color: Color.fromARGB(255, 103, 103, 103),
                                 ),
